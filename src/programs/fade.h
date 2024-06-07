@@ -1,10 +1,20 @@
 #pragma once
 
+#include <FastLED.h>
+
+#include "../matrix.h"
 #include "../program.h"
 
-class fade : public program {
+class Fade : public Program {
   public:
-  ~fade() override = default;
-  void render(unsigned long frame) override {
+  explicit Fade(Matrix &matrix) : matrix(matrix) {}
+  ~Fade() override = default;
+  void render(uint32_t frame) override {
+    this->color.setHSV(frame % 255, 255, 255);
+    this->matrix.fill(color);
   }
+
+  private:
+  Matrix &matrix;
+  CRGB color;
 };

@@ -1,12 +1,12 @@
 #pragma once
 
-template<typename T, unsigned long S>
-class array {
+template<typename T, uint32_t S>
+class Array {
   public:
-  [[nodiscard]] constexpr unsigned long size() const {
+  [[nodiscard]] constexpr uint32_t size() const {
     return S;
   }
-  T &operator[](unsigned long index) {
+  T &operator[](uint32_t index) {
     return this->data[index];
   }
   T data[S];

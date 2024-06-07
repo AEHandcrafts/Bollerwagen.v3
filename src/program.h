@@ -1,7 +1,7 @@
 #pragma once
 
-class program {
+class Program {
   public:
-  virtual ~program() = default;
-  virtual void render(unsigned long frame) = 0;
+  virtual ~Program() = default;
+  virtual void render(uint32_t frame) = 0;
 };

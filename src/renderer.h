@@ -3,10 +3,10 @@
 #include "array.h"
 #include "program.h"
 
-template<unsigned long NUMBER_OF_PROGRAMS>
-class renderer {
+template<uint32_t NUMBER_OF_PROGRAMS>
+class Renderer {
   public:
-  explicit renderer(array<program *, NUMBER_OF_PROGRAMS> programs) : programs(programs) {}
+  explicit Renderer(Array<Program *, NUMBER_OF_PROGRAMS> programs) : programs(programs) {}
   void next() {
     this->runningProgram = this->runningProgram + 1 % NUMBER_OF_PROGRAMS;
   }
@@ -16,7 +16,7 @@ class renderer {
   }
 
   private:
-  array<program *, NUMBER_OF_PROGRAMS> programs;
-  int runningProgram = 0;
-  unsigned long frame = 0;
+  Array<Program *, NUMBER_OF_PROGRAMS> programs;
+  uint32_t runningProgram = 0;
+  uint32_t frame = 0;
 };
