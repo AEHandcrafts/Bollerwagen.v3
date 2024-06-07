@@ -1,13 +1,12 @@
 #pragma once
 
+#include "array.h"
 #include "program.h"
-#include <array>
 
 template<unsigned long NUMBER_OF_PROGRAMS>
 class renderer {
   public:
-  explicit renderer(std::array<program *, NUMBER_OF_PROGRAMS> programs) : programs(programs) {
-  }
+  explicit renderer(array<program *, NUMBER_OF_PROGRAMS> programs) : programs(programs) {}
   void next() {
     this->runningProgram = this->runningProgram + 1 % NUMBER_OF_PROGRAMS;
   }
@@ -17,7 +16,7 @@ class renderer {
   }
 
   private:
-  std::array<program *, NUMBER_OF_PROGRAMS> programs;
+  array<program *, NUMBER_OF_PROGRAMS> programs;
   int runningProgram = 0;
   unsigned long frame = 0;
 };

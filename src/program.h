@@ -2,6 +2,6 @@
 
 class program {
   public:
-  virtual ~program() = 0;
+  virtual ~program() = default;
   virtual void render(unsigned long frame) = 0;
 };

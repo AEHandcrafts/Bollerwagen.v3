@@ -10,8 +10,10 @@
 #define LED_PIN 1
 
 CRGB leds[NUM_LEDS];
+
 static_color blue;
 fade fade;
+
 renderer<2> program_renderer({&blue, &fade});
 
 void setup() {
@@ -21,4 +23,9 @@ void setup() {
 void loop() {
   program_renderer.render();
   FastLED.show();
+}
+
+void onButtonClick() {
+  program_renderer.next();
+  FastLED.clear();
 }
