@@ -7,9 +7,11 @@
 #include "programs/fade.h"
 #include "programs/static-color.h"
 
+#define LED_TYPE WS2812B
+#define COLOR_ORDER GRB
 #define WIDTH 37
 #define HEIGHT 9
-#define LED_PIN 1   // TODO: set proper led pin
+#define LED_PIN 1
 #define BUTTON_PIN 3// TODO: set proper button pin
 
 CRGB leds[WIDTH * HEIGHT];
@@ -31,10 +33,8 @@ IRAM_ATTR void onButtonClick() {
 }
 
 void setup() {
-  Serial.begin(9600);
-  CFastLED::addLeds<WS2812B, LED_PIN, BGR>(leds, WIDTH * HEIGHT);
+  CFastLED::addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, WIDTH * HEIGHT);
   attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), onButtonClick, RISING);
-  Serial.println("setup done");
 }
 
 void loop() {

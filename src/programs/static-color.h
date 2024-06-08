@@ -11,7 +11,7 @@ class StaticColor : public Program {
   ~StaticColor() override = default;
   void render(uint32_t frame) override {
     this->matrix.fill(this->color);
-    delay(5000);
+    delay(100);
   }
 
   private:

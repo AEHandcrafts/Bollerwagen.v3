@@ -9,5 +9,7 @@ class Array {
   T &operator[](uint32_t index) {
     return this->data[index];
   }
+
+  public:
   T data[S];
 };
