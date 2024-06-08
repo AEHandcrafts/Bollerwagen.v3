@@ -1,36 +1,41 @@
 #include <Arduino.h>
 #include <FastLED.h>
 
-#define LED_TYPE APA102
-#define COLOR_ORDER BGR
-#define NUM_LEDS 300
-#define DATA_PIN 1
-#define CLOCK_PIN 2
+#include "matrix.h"
+#include "renderer.h"
 
-int ledCutoff = 154;
+#include "programs/fade.h"
+#include "programs/static-color.h"
 
-CRGB leds[NUM_LEDS];
+#define LED_TYPE WS2812B
+#define COLOR_ORDER GRB
+#define WIDTH 37
+#define HEIGHT 9
+#define LED_PIN 1    // D1 on the board
+#define BUTTON_PIN D3// D3 on the board
 
-void setup() {
-  FastLED.addLeds<LED_TYPE, DATA_PIN, CLOCK_PIN, COLOR_ORDER>(leds, NUM_LEDS);
+CRGB leds[WIDTH * HEIGHT];
+Matrix matrix(leds, WIDTH, HEIGHT);
+
+Fade fade(matrix);
+StaticColor red(matrix, CRGB::Red);
+StaticColor green(matrix, CRGB::Green);
+StaticColor blue(matrix, CRGB::Blue);
+StaticColor white(matrix, CRGB::White);
+StaticColor black(matrix, CRGB::Black);
+Renderer<6> renderer({&fade, &red, &green, &blue, &white, &black});
+
+IRAM_ATTR void onButtonClick() {
+  renderer.next();
 }
 
-int t = 0;
-int color = 0xFF1100;
+void setup() {
+  CFastLED::addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, WIDTH * HEIGHT);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  attachInterrupt(BUTTON_PIN, &onButtonClick, RISING);
+}
 
 void loop() {
-  t++;
-
-  if (t % 100 == 0) {
-    for (int i = 0; i < ledCutoff; i++)
-      leds[i] = CRGB::White;
-  } else {
-    for (int i = 0; i < ledCutoff; i++)
-      leds[i] = CRGB(color);
-  }
-
-  for (int i = ledCutoff; i < NUM_LEDS; i++)
-    leds[i] = CRGB(color);
+  renderer.render();
   FastLED.show();
-  delay(8);
 }
