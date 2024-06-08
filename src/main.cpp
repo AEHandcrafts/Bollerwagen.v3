@@ -7,11 +7,13 @@
 #include "programs/fade.h"
 #include "programs/static-color.h"
 
-#define NUM_LEDS 300
-#define LED_PIN 1
+#define WIDTH 40    // TODO: set proper width
+#define HEIGHT 40   // TODO: set proper height
+#define LED_PIN 1   // TODO: set proper led pin
+#define BUTTON_PIN 3// TODO: set proper button pin
 
-CRGB leds[NUM_LEDS];
-Matrix matrix(leds, 10, 50);
+CRGB leds[WIDTH * HEIGHT];
+Matrix matrix(leds, WIDTH, HEIGHT);
 
 Fade fade(matrix);
 StaticColor red(matrix, CRGB::Red);
@@ -21,16 +23,19 @@ StaticColor white(matrix, CRGB::White);
 StaticColor black(matrix, CRGB::Black);
 Renderer<6> renderer({&fade, &red, &green, &blue, &white, &black});
 
+void onButtonClick() {
+  noInterrupts();
+  renderer.next();
+  FastLED.clear();
+  interrupts();
+}
+
 void setup() {
-  CFastLED::addLeds<WS2812B, LED_PIN, BGR>(leds, NUM_LEDS);
+  CFastLED::addLeds<WS2812B, LED_PIN, BGR>(leds, WIDTH * HEIGHT);
+  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), onButtonClick, RISING);
 }
 
 void loop() {
   renderer.render();
   FastLED.show();
-}
-
-void onButtonClick() {
-  renderer.next();
-  FastLED.clear();
 }
