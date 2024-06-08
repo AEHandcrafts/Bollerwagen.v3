@@ -26,15 +26,13 @@ StaticColor black(matrix, CRGB::Black);
 Renderer<6> renderer({&fade, &red, &green, &blue, &white, &black});
 
 IRAM_ATTR void onButtonClick() {
-  noInterrupts();
   renderer.next();
-  interrupts();
 }
 
 void setup() {
   CFastLED::addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, WIDTH * HEIGHT);
   pinMode(BUTTON_PIN, INPUT_PULLUP);
-  attachInterrupt(BUTTON_PIN, &onButtonClick, FALLING);
+  attachInterrupt(BUTTON_PIN, &onButtonClick, RISING);
 }
 
 void loop() {
