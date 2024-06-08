@@ -7,8 +7,8 @@
 #include "programs/fade.h"
 #include "programs/static-color.h"
 
-#define WIDTH 40    // TODO: set proper width
-#define HEIGHT 40   // TODO: set proper height
+#define WIDTH 37
+#define HEIGHT 9
 #define LED_PIN 1   // TODO: set proper led pin
 #define BUTTON_PIN 3// TODO: set proper button pin
 
