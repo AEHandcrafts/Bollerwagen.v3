@@ -23,7 +23,7 @@ StaticColor white(matrix, CRGB::White);
 StaticColor black(matrix, CRGB::Black);
 Renderer<6> renderer({&fade, &red, &green, &blue, &white, &black});
 
-void onButtonClick() {
+IRAM_ATTR void onButtonClick() {
   noInterrupts();
   renderer.next();
   FastLED.clear();
@@ -31,8 +31,10 @@ void onButtonClick() {
 }
 
 void setup() {
+  Serial.begin(9600);
   CFastLED::addLeds<WS2812B, LED_PIN, BGR>(leds, WIDTH * HEIGHT);
   attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), onButtonClick, RISING);
+  Serial.println("setup done");
 }
 
 void loop() {
