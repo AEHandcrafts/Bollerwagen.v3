@@ -11,8 +11,8 @@
 #define COLOR_ORDER GRB
 #define WIDTH 37
 #define HEIGHT 9
-#define LED_PIN 1
-#define BUTTON_PIN 3// TODO: set proper button pin
+#define LED_PIN 1    // D1 on the board
+#define BUTTON_PIN D3// D3 on the board
 
 CRGB leds[WIDTH * HEIGHT];
 Matrix matrix(leds, WIDTH, HEIGHT);
@@ -28,13 +28,13 @@ Renderer<6> renderer({&fade, &red, &green, &blue, &white, &black});
 IRAM_ATTR void onButtonClick() {
   noInterrupts();
   renderer.next();
-  FastLED.clear();
   interrupts();
 }
 
 void setup() {
   CFastLED::addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, WIDTH * HEIGHT);
-  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), onButtonClick, RISING);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  attachInterrupt(BUTTON_PIN, &onButtonClick, FALLING);
 }
 
 void loop() {
