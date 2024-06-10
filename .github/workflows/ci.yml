@@ -13,4 +13,5 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install platformio
-      - run: pio run
+      - run: pio test -e native
+      - run: pio run -e esp

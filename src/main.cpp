@@ -26,7 +26,7 @@ IRAM_ATTR void onButtonClick() {
 
 void setup() {
   CFastLED::addLeds<WS2812B, LED_PIN, LED_COLOR_ORDER>(matrix.leds, matrix.width * matrix.height);
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_PIN, INPUT);
   attachInterrupt(BUTTON_PIN, onButtonClick, RISING);
 }
 
