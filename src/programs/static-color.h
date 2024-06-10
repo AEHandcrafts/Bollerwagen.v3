@@ -15,6 +15,6 @@ class StaticColor : public Program {
   }
 
   private:
-  Matrix &matrix;
-  CRGB color;
+  const Matrix &matrix;
+  const CRGB color;
 };

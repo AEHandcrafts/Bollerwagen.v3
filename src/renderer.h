@@ -1,14 +1,19 @@
 #pragma once
 
-#include "array.h"
+#include <initializer_list>
+
 #include "program.h"
 
-template<uint32_t NUMBER_OF_PROGRAMS>
 class Renderer {
   public:
-  explicit Renderer(Array<Program *, NUMBER_OF_PROGRAMS> programs) : programs(programs) {}
+  Renderer(std::initializer_list<Program *> programs) : numberOfPrograms(programs.size()), programs(new Program *[programs.size()]) {
+    std::copy(programs.begin(), programs.end(), this->programs);
+  }
+  ~Renderer() {
+    delete[] this->programs;
+  }
   void next() {
-    this->runningProgram = this->runningProgram + 1 % NUMBER_OF_PROGRAMS;
+    this->runningProgram = this->runningProgram + 1 % this->numberOfPrograms;
   }
   void render() {
     this->programs[runningProgram]->render(this->frame);
@@ -16,7 +21,8 @@ class Renderer {
   }
 
   private:
-  Array<Program *, NUMBER_OF_PROGRAMS> programs;
+  const uint32_t numberOfPrograms;
+  Program **const programs;
   uint32_t runningProgram = 0;
   uint32_t frame = 0;
 };
