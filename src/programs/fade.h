@@ -7,14 +7,12 @@
 
 class Fade : public Program {
   public:
-  explicit Fade(Matrix &matrix) : matrix(matrix), color(CRGB::Black) {}
+  explicit Fade(Matrix &matrix) : matrix(matrix) {}
   ~Fade() override = default;
   void render(uint32_t frame) override {
-    this->color.setHSV(frame % 255, 255, 255);
-    this->matrix.fill(color);
+    this->matrix.fill(CRGB().setHSV(frame % 255, 255, 255));
   }
 
   private:
   const Matrix &matrix;
-  CRGB color;
 };

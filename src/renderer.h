@@ -16,6 +16,7 @@ class Renderer {
     this->runningProgram = this->runningProgram + 1 % this->numberOfPrograms;
   }
   void render() {
+    // TODO: calculate and cap FPS
     this->programs[runningProgram]->render(this->frame);
     this->frame++;
   }

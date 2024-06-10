@@ -11,7 +11,8 @@ class StaticColor : public Program {
   ~StaticColor() override = default;
   void render(uint32_t frame) override {
     this->matrix.fill(this->color);
-    delay(100);
+    this->matrix(0, 0) = CRGB::White;// TODO remove this line. This is just for testing purposes
+    this->matrix(9, 9) = CRGB::White;// TODO remove this line. This is just for testing purposes
   }
 
   private:
