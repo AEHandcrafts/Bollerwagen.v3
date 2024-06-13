@@ -21,16 +21,16 @@ class Matrix {
     if (this->mappingStrategy == MatrixMapping::BOTTOM_RIGHT_ZIGZAG) return this->leds[mapBottomRightZigzag(x, y, this->width, this->height)];
     panic();
   }
-  void fillColumn(uint32_t x, CRGB color) const {
+  inline void fillColumn(uint32_t x, CRGB color) const {
     for (uint32_t y = 0; y < this->height; y++) this->operator()(x, y) = color;
   }
-  void fillRow(uint32_t y, CRGB color) const {
+  inline void fillRow(uint32_t y, CRGB color) const {
     for (uint32_t x = 0; x < this->width; x++) this->operator()(x, y) = color;
   }
-  void fill(CRGB color) const {
+  inline void fill(CRGB color) const {
     for (uint32_t i = 0; i < this->width * this->height; i++) leds[i] = color;
   }
-  void clear() const {
+  inline void clear() const {
     this->fill(CRGB::Black);
   }
 

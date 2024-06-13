@@ -6,6 +6,7 @@
 
 #include "programs/fade.h"
 #include "programs/horizontal-fade.h"
+#include "programs/noise.h"
 #include "programs/static-color.h"
 
 #define LED_COLOR_ORDER GRB
@@ -20,7 +21,8 @@ StaticColor green(matrix, CRGB::Green);
 StaticColor blue(matrix, CRGB::Blue);
 StaticColor white(matrix, CRGB::White);
 StaticColor black(matrix, CRGB::Black);
-Renderer renderer({&fade, &horizontalFade, &red, &green, &blue, &white, &black});
+Noise noise(matrix, CRGB::White);
+Renderer renderer({&fade, &horizontalFade, &red, &green, &blue, &white, &black, &noise});
 
 IRAM_ATTR void onButtonClick() {
   renderer.next();
