@@ -10,7 +10,8 @@
 #include "programs/static-color.h"
 
 #define LED_COLOR_ORDER GRB
-#define LED_PIN 1    // D1 on the board
+#define LED_LEFT_PIN 1    // D1 on the board
+#define LED_RIGHT_PIN 2    // D1 on the board
 #define BUTTON_PIN D3// D3 on the board
 
 Matrix matrix(37, 10, MatrixMapping::BOTTOM_RIGHT_ZIGZAG);
@@ -29,7 +30,8 @@ IRAM_ATTR void onButtonClick() {
 }
 
 void setup() {
-  CFastLED::addLeds<WS2812B, LED_PIN, LED_COLOR_ORDER>(matrix.leds, matrix.width * matrix.height);
+  CFastLED::addLeds<WS2812B, LED_LEFT_PIN, LED_COLOR_ORDER>(matrix.ledsLeft, matrix.ledsCountLeft);
+  CFastLED::addLeds<WS2812B, LED_RIGHT_PIN, LED_COLOR_ORDER>(matrix.ledsRight, matrix.ledsCountRight);
   pinMode(BUTTON_PIN, INPUT);
   attachInterrupt(BUTTON_PIN, onButtonClick, RISING);
 }
