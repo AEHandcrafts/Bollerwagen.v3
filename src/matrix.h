@@ -12,7 +12,8 @@ class Matrix {
   public:
   Matrix(uint32_t width, uint32_t height, MatrixMapping mappingStrategy) : width(37), height(9), ledsLeft(new CRGB[37 * 9 + 35 + 14]), ledsRight(new CRGB[37 * 9 + 35 + 14]), ledsCountLeft(37 * 9 + 35 + 14), ledsCountRight(37 * 9 + 35 + 14), mappingStrategy(mappingStrategy) {}
   ~Matrix() {
-    delete[] this->leds;
+    delete[] this->ledsLeft;
+    delete[] this->ledsRight;
   }
   inline CRGB &operator()(uint32_t x, uint32_t y, uint32_t left) const {
     // could hve used the strategy pattern with real virtual function calls
@@ -39,8 +40,8 @@ class Matrix {
       for (uint32_t i = this->width * this->height + 35; i < this->width * this->height + 35 + 15; i++)
         this->ledsRight[i] = color;
     else {
-      this->ledsLeft[this->width * this->height + x] = color;
-      this->ledsRight[this->width * this->height + 36-x] = color;
+      this->ledsLeft[this->width * this->height + x - 1] = color;
+      this->ledsRight[this->width * this->height + 35 - x] = color;
     }
   }
   inline void fillRow(uint32_t y, CRGB color) const {

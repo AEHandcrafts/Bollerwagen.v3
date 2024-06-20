@@ -12,7 +12,8 @@ class Noise : public Program {
   void render(uint32_t frame) override {
     this->matrix.clear();
     for (uint8_t i = 0; i < 16; i++) {
-      this->matrix(random(0, 37), random(0, 11)) = this->color;
+      this->matrix(random(0, 37), random(0, 10), 0) = this->color;
+      this->matrix(random(0, 37), random(0, 10), 1) = this->color;
     }
   }
 
